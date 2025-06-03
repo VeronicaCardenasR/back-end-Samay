@@ -13,6 +13,7 @@ import java.util.List;
 public class VentaProductoController {
 
     private final VentaProductoService ventaProductoService;
+
     @Autowired
     public VentaProductoController(VentaProductoService ventaProductoService) {
         this.ventaProductoService = ventaProductoService;
