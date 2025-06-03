@@ -48,6 +48,7 @@ public class Producto {
         this.price = price;
         this.description = description;
         this.img = img;
+        
     }
 
     public Long getProducto_id() {

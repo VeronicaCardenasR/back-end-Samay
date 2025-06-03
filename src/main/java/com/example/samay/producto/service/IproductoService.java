@@ -6,6 +6,7 @@ import com.example.samay.producto.model.Producto;
 import java.util.List;
 
 public interface IproductoService {
+
     List<Producto> obtenerTodos();
     Producto obtenerPorId(Long id);
     void guardarProducto(Producto producto);

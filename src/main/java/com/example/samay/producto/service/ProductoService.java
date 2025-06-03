@@ -11,6 +11,7 @@ import java.util.List;
 public class ProductoService implements IproductoService {
 
     private final IproductoRepository productoRepository;
+
     @Autowired
     public ProductoService(IproductoRepository productoRepository) {
         this.productoRepository = productoRepository;

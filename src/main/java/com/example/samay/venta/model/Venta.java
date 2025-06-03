@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Venta {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long venta_id;

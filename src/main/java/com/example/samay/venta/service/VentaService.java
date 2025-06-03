@@ -32,6 +32,7 @@ public class VentaService implements IventaService {
 
     @Override
     public void guardarVenta(Venta venta) {
+
         Usuario usuario = usuarioRepository.findById(venta.getUsuario().getUsuario_id())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         venta.setUsuario(usuario);

@@ -5,6 +5,7 @@ import com.example.samay.usuario.model.Usuario;
 import java.util.List;
 
 public interface IusuarioService {
+
     List<Usuario> obtenerTodos();
     Usuario obtenerPorId(Long id);
     void guardarUsuario(Usuario usuario);

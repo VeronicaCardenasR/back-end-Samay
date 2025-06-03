@@ -37,6 +37,7 @@ public class VentaProductoService implements IventaProductoService {
 
     @Override
     public void guardarVentaProducto(VentaProducto ventaProducto) {
+
         Venta venta = ventaRepository.findById(ventaProducto.getVenta().getVenta_id())
                 .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
 

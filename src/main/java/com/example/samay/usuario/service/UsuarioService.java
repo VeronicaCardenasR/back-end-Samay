@@ -34,6 +34,7 @@ public class UsuarioService implements IusuarioService {
 
     @Override
     public void deleteUsuario(Long id) {
+
         usuarioRepository.deleteById(id);
 
     }

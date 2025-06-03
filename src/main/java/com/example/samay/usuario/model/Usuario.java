@@ -28,6 +28,7 @@ public class Usuario {
     }
 
     public Usuario(Long usuario_id, String nombre, String contrasena, String correo, String telefono, String rol) {
+
         this.usuario_id = usuario_id;
         this.nombre = nombre;
         this.contrasena = contrasena;

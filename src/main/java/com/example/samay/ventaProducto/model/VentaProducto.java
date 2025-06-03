@@ -30,6 +30,7 @@ public class VentaProducto {
     }
 
     public VentaProducto(Long venta_producto_id, BigDecimal precio_unitario, Integer cantidad, Venta venta, Producto producto) {
+
         this.venta_producto_id = venta_producto_id;
         this.precio_unitario = precio_unitario;
         this.cantidad = cantidad;
