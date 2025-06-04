@@ -1,6 +1,7 @@
 package com.example.samay.ventaProducto.service;
 
 import com.example.samay.ventaProducto.model.VentaProducto;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
