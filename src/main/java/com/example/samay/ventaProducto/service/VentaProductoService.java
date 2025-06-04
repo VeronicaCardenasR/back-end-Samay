@@ -4,6 +4,7 @@ import com.example.samay.producto.model.Producto;
 import com.example.samay.venta.model.Venta;
 import com.example.samay.producto.repository.IproductoRepository;
 import com.example.samay.venta.repository.IventaRepository;
+import com.example.samay.ventaProducto.model.VentaConProductosDTO;
 import com.example.samay.ventaProducto.model.VentaProducto;
 import com.example.samay.ventaProducto.repository.IventaProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,38 @@ public class VentaProductoService implements IventaProductoService {
         productoRepository.save(producto);
     }
 
+
+
+    public void guardarVentaConProductos(VentaConProductosDTO dto) {
+        Venta venta = ventaRepository.findById(dto.getVentaId())
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+
+        for (VentaConProductosDTO.ProductoCantidadDTO prodDto : dto.getProductos()) {
+            Producto producto = productoRepository.findById(prodDto.getProductoId())
+                    .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + prodDto.getProductoId()));
+
+            if (prodDto.getCantidad() <= 0) {
+                throw new RuntimeException("La cantidad debe ser mayor a cero");
+            }
+
+            if (producto.getQuanty() < prodDto.getCantidad()) {
+                throw new RuntimeException("Stock insuficiente para producto: " + prodDto.getProductoId());
+            }
+
+            VentaProducto ventaProducto = new VentaProducto();
+            ventaProducto.setVenta(venta);
+            ventaProducto.setProducto(producto);
+            ventaProducto.setCantidad(prodDto.getCantidad());
+            ventaProducto.setPrecio_unitario(prodDto.getPrecioUnitario());
+
+            ventaProductoRepository.save(ventaProducto);
+
+            producto.setQuanty(producto.getQuanty() - prodDto.getCantidad());
+            productoRepository.save(producto);
+        }
+    }
+
+
     @Override
     public List<VentaProducto> obtenerPorVentaId(Long ventaId) {
         Venta venta = ventaRepository.findById(ventaId)
@@ -74,9 +107,9 @@ public class VentaProductoService implements IventaProductoService {
         return ventaProductoRepository.findByVenta(venta);
     }
 
-
-
-
-
 }
+
+
+
+
 
