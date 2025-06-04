@@ -67,5 +67,12 @@ public class VentaProductoService implements IventaProductoService {
         productoRepository.save(producto);
     }
 
+    @Override
+    public List<VentaProducto> obtenerPorVentaId(Long ventaId) {
+        return ventaProductoRepository.findByVenta_VentaId(ventaId);
+    }
+
+
+
 }
 
