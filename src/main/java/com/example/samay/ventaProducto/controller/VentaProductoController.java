@@ -1,5 +1,6 @@
 package com.example.samay.ventaProducto.controller;
 
+import com.example.samay.ventaProducto.model.VentaConProductosDTO;
 import com.example.samay.ventaProducto.service.VentaProductoService;
 import com.example.samay.ventaProducto.model.VentaProducto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,13 @@ public class VentaProductoController {
         ventaProductoService.guardarVentaProducto(ventaProducto);
         return ResponseEntity.ok("Producto agregado a la venta correctamente");
     }
+
+    @PostMapping("/agregar-multiples")
+    public ResponseEntity<String> agregarProductosAVenta(@RequestBody VentaConProductosDTO dto) {
+        ventaProductoService.guardarVentaConProductos(dto);
+        return ResponseEntity.ok("Productos agregados a la venta correctamente");
+    }
+
 
 
 }
