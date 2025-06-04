@@ -68,7 +68,7 @@ public class VentaProductoService implements IventaProductoService {
         productoRepository.save(producto);
     }
 
-<<<<<<< HEAD
+
 
     public void guardarVentaConProductos(VentaConProductosDTO dto) {
         Venta venta = ventaRepository.findById(dto.getVentaId())
@@ -99,14 +99,14 @@ public class VentaProductoService implements IventaProductoService {
         }
     }
 
-=======
-    @Override
-    public List<VentaProducto> obtenerPorVentaId(Long ventaId) {
-        return ventaProductoRepository.findByVenta_VentaId(ventaId);
-    }
+
+//    @Override
+//    public List<VentaProducto> obtenerPorVentaId(Long ventaId) {
+//        return ventaProductoRepository.findByVenta_VentaId(ventaId);
+//    }
 
 
 
->>>>>>> 2b4303263398e4c01a7d49cbdbb7bd35925e188e
+
 }
 
