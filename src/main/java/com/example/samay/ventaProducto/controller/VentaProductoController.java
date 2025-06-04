@@ -37,14 +37,15 @@ public class VentaProductoController {
     }
 
     @GetMapping("/venta/{ventaId}")
-    public List<VentaProducto> obtenerPorVentaId(@PathVariable Long ventaId) {
+    public List<VentaProducto> obtenerPorVenta(@PathVariable Long ventaId) {
         return ventaProductoService.obtenerPorVentaId(ventaId);
+
+
+
+
+
+
     }
-
-
-
-
-
 }
 
 

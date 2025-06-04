@@ -69,8 +69,12 @@ public class VentaProductoService implements IventaProductoService {
 
     @Override
     public List<VentaProducto> obtenerPorVentaId(Long ventaId) {
-        return ventaProductoRepository.findByVenta_VentaId(ventaId);
+        Venta venta = ventaRepository.findById(ventaId)
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+        return ventaProductoRepository.findByVenta(venta);
     }
+
+
 
 
 
