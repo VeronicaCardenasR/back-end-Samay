@@ -9,5 +9,6 @@ public interface IventaProductoService {
     List<VentaProducto> obtenerTodas();
     VentaProducto obtenerPorId(Long id);
     void guardarVentaProducto(VentaProducto ventaProducto);
+    List<VentaProducto> obtenerPorVentaId(Long ventaId);
 
 }

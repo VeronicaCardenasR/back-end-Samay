@@ -37,6 +37,7 @@ public class VentaProductoController {
         return ResponseEntity.ok("Producto agregado a la venta correctamente");
     }
 
+<<<<<<< HEAD
     @PostMapping("/agregar-multiples")
     public ResponseEntity<String> agregarProductosAVenta(@RequestBody VentaConProductosDTO dto) {
         ventaProductoService.guardarVentaConProductos(dto);
@@ -44,6 +45,16 @@ public class VentaProductoController {
     }
 
 
+=======
+    @GetMapping("/venta/{ventaId}")
+    public List<VentaProducto> obtenerPorVentaId(@PathVariable Long ventaId) {
+        return ventaProductoService.obtenerPorVentaId(ventaId);
+    }
+
+
+
+
+>>>>>>> 2b4303263398e4c01a7d49cbdbb7bd35925e188e
 
 }
 
