@@ -36,6 +36,14 @@ public class VentaProductoController {
         return ResponseEntity.ok("Producto agregado a la venta correctamente");
     }
 
+    @GetMapping("/venta/{ventaId}")
+    public List<VentaProducto> obtenerPorVentaId(@PathVariable Long ventaId) {
+        return ventaProductoService.obtenerPorVentaId(ventaId);
+    }
+
+
+
+
 
 }
 
