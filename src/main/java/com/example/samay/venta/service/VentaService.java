@@ -31,11 +31,14 @@ public class VentaService implements IventaService {
     }
 
     @Override
-    public void guardarVenta(Venta venta) {
-
+    public Venta guardarVenta(Venta venta) {
         Usuario usuario = usuarioRepository.findById(venta.getUsuario().getUsuario_id())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
         venta.setUsuario(usuario);
-        ventaRepository.save(venta);
+
+        Venta ventaGuardada = ventaRepository.save(venta); // 👈 este tiene el ID generado
+        return ventaGuardada;
     }
+
 }

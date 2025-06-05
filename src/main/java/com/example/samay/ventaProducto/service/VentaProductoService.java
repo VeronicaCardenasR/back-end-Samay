@@ -69,21 +69,22 @@ public class VentaProductoService implements IventaProductoService {
     }
 
 
-
     public void guardarVentaConProductos(VentaConProductosDTO dto) {
+        System.out.println("DTO recibido: " + dto);
         Venta venta = ventaRepository.findById(dto.getVentaId())
-                .orElseThrow(() -> new RuntimeException("Venta no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Venta no encontrada: " + dto.getVentaId()));
 
         for (VentaConProductosDTO.ProductoCantidadDTO prodDto : dto.getProductos()) {
+            System.out.println("Procesando producto: " + prodDto.getProductoId());
             Producto producto = productoRepository.findById(prodDto.getProductoId())
                     .orElseThrow(() -> new RuntimeException("Producto no encontrado: " + prodDto.getProductoId()));
 
             if (prodDto.getCantidad() <= 0) {
-                throw new RuntimeException("La cantidad debe ser mayor a cero");
+                throw new RuntimeException("La cantidad debe ser mayor a cero para producto: " + prodDto.getProductoId());
             }
 
             if (producto.getQuanty() < prodDto.getCantidad()) {
-                throw new RuntimeException("Stock insuficiente para producto: " + prodDto.getProductoId());
+                throw new RuntimeException("Stock insuficiente para producto: " + prodDto.getProductoId() + ", disponible: " + producto.getQuanty());
             }
 
             VentaProducto ventaProducto = new VentaProducto();
