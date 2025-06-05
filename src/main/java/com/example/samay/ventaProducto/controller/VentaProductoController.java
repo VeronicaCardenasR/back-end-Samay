@@ -48,6 +48,7 @@ public class VentaProductoController {
         }
     }
 
+
     @PostMapping("/agregar-multiples")
     public ResponseEntity<Map<String, String>> agregarProductosAVenta(@RequestBody VentaConProductosDTO dto) {
         try {
@@ -62,8 +63,20 @@ public class VentaProductoController {
         }
     }
 
+
+
     @GetMapping("/venta/{ventaId}")
     public List<VentaProducto> obtenerPorVenta(@PathVariable Long ventaId) {
         return ventaProductoService.obtenerPorVentaId(ventaId);
+
+
+
+
+
     }
+
 }
+
+
+
+
