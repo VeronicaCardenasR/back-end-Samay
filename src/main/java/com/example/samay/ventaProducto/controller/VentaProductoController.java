@@ -4,10 +4,13 @@ import com.example.samay.ventaProducto.model.VentaConProductosDTO;
 import com.example.samay.ventaProducto.service.VentaProductoService;
 import com.example.samay.ventaProducto.model.VentaProducto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/venta-productos")
@@ -26,36 +29,41 @@ public class VentaProductoController {
         return ventaProductoService.obtenerTodas();
     }
 
-    @GetMapping ("/buscar/{id}")
+    @GetMapping("/buscar/{id}")
     public VentaProducto obtenerPorId(@PathVariable Long id) {
         return ventaProductoService.obtenerPorId(id);
     }
 
     @PostMapping("/agregarVentaProducto")
-    public ResponseEntity<String> guardarVentaProducto(@RequestBody VentaProducto ventaProducto) {
-        ventaProductoService.guardarVentaProducto(ventaProducto);
-        return ResponseEntity.ok("Producto agregado a la venta correctamente");
+    public ResponseEntity<Map<String, String>> guardarVentaProducto(@RequestBody VentaProducto ventaProducto) {
+        try {
+            ventaProductoService.guardarVentaProducto(ventaProducto);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Producto agregado a la venta correctamente");
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
     }
-
 
     @PostMapping("/agregar-multiples")
-    public ResponseEntity<String> agregarProductosAVenta(@RequestBody VentaConProductosDTO dto) {
-        ventaProductoService.guardarVentaConProductos(dto);
-        return ResponseEntity.ok("Productos agregados a la venta correctamente");
+    public ResponseEntity<Map<String, String>> agregarProductosAVenta(@RequestBody VentaConProductosDTO dto) {
+        try {
+            ventaProductoService.guardarVentaConProductos(dto);
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Productos agregados a la venta correctamente");
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            Map<String, String> errorResponse = new HashMap<>();
+            errorResponse.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
     }
 
-
-
-//    @GetMapping("/venta/{ventaId}")
-//    public List<VentaProducto> obtenerPorVentaId(@PathVariable Long ventaId) {
-//        return ventaProductoService.obtenerPorVentaId(ventaId);
-//    }
-//
-
-
-
-
-
+    @GetMapping("/venta/{ventaId}")
+    public List<VentaProducto> obtenerPorVenta(@PathVariable Long ventaId) {
+        return ventaProductoService.obtenerPorVentaId(ventaId);
+    }
 }
-
-

@@ -8,7 +8,7 @@ public interface IventaService {
 
     List<Venta> obtenerTodas();
     Venta obtenerPorId(Long id);
-    void guardarVenta(Venta venta);
+    Venta guardarVenta(Venta venta);
 
 
 }

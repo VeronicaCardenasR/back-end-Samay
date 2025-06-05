@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/ventas")
@@ -31,11 +33,14 @@ public class VentaController {
     }
 
     @PostMapping("/agregarVenta")
-    public ResponseEntity<String> guardarVenta(@RequestBody Venta venta) {
-        ventaService.guardarVenta(venta);
-        return ResponseEntity.ok("Venta agregada con éxito");
-    }
+    public ResponseEntity<Map<String, Object>> guardarVenta(@RequestBody Venta venta) {
+        Venta ventaGuardada = ventaService.guardarVenta(venta);
 
+        Map<String, Object> response = new HashMap<>();
+        response.put("id", ventaGuardada.getVenta_id()); // 👈 Devolvemos solo el ID
+
+        return ResponseEntity.ok(response);
+    }
 
 
 
