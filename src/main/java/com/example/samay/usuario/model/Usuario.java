@@ -5,24 +5,24 @@ import jakarta.persistence.*;
 @Entity
 public class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long usuario_id;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long usuario_id;
 
-    @Column(nullable = false, length = 50)
-    private String nombre;
+        @Column(nullable = false, length = 50)
+        private String nombre;
 
-    @Column(name = "contraseña", nullable = false, length = 50)
-    private String contrasena;
+        @Column(name = "contraseña", nullable = false, length = 255)
+        private String contrasena;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String correo;
+        @Column(nullable = false, unique = true, length = 50)
+        private String correo;
 
-    @Column(nullable = false, length = 20)
-    private String telefono;
+        @Column(nullable = false, length = 20)
+        private String telefono;
 
-    @Column(nullable = false)
-    private String rol;
+        @Column(nullable = false)
+        private String rol;
 
     public Usuario() {
     }
