@@ -8,8 +8,9 @@ public interface IusuarioService {
 
     List<Usuario> obtenerTodos();
     Usuario obtenerPorId(Long id);
-    void guardarUsuario(Usuario usuario);
+    public Usuario guardarUsuario(Usuario usuario);
     void deleteUsuario(Long id);
     void editarUsuario (Long id, Usuario usuarioActualizado);
+
 }
 

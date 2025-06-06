@@ -3,18 +3,28 @@ package com.example.samay.usuario.service;
 import com.example.samay.usuario.model.Usuario;
 import com.example.samay.usuario.repository.IusuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class UsuarioService implements IusuarioService {
 
     private final IusuarioRepository usuarioRepository;
 
+
     @Autowired
     public UsuarioService(IusuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<Usuario> obtenerTodos() {
@@ -26,17 +36,44 @@ public class UsuarioService implements IusuarioService {
         return usuarioRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public void guardarUsuario(Usuario usuario) {
-        usuarioRepository.save(usuario);
+    public Usuario guardarUsuario(Usuario usuario) {
+        Usuario userLogin = new Usuario();
 
+        userLogin.setNombre(usuario.getNombre());
+        userLogin.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        userLogin.setCorreo(usuario.getCorreo());
+        userLogin.setTelefono(usuario.getTelefono());
+        if (usuario.getRol() == null || usuario.getRol().isEmpty()) {
+            userLogin.setRol("cliente"); // asigna rol por defecto si no viene
+        } else {
+            userLogin.setRol(usuario.getRol());
+        }
+
+        return usuarioRepository.save(userLogin);
     }
+    // Métdo de carga de usuario implementado desde UserDetailsService
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario user = usuarioRepository.findByCorreo(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }
 
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRol()));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getCorreo(),
+                user.getContrasena(),
+                authorities
+        );
+    }
     @Override
     public void deleteUsuario(Long id) {
 
         usuarioRepository.deleteById(id);
 
+    }
+    public Usuario obtenerPorCorreo(String correo) {
+        return usuarioRepository.findByCorreo(correo);
     }
 
     @Override
