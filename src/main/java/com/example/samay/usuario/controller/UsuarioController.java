@@ -53,7 +53,9 @@ public class UsuarioController {
                     .map(GrantedAuthority::getAuthority)
                     .orElse("");
             // Generamos token con rol
-            String token = jwtUtil.generateToken(userDetails.getUsername(), role);
+            Usuario usuarioEntity = usuarioService.obtenerPorCorreo(user.getCorreo());
+            String token = jwtUtil.generateToken(usuarioEntity.getUsuario_id(), userDetails.getUsername(), role);
+
             return ResponseEntity.ok(token);
         }
         return ResponseEntity.status(401).body("Credenciales inválidas");
