@@ -34,15 +34,27 @@ public class VentaController {
 
     @PostMapping("/agregarVenta")
     public ResponseEntity<Map<String, Object>> guardarVenta(@RequestBody Venta venta) {
-        Venta ventaGuardada = ventaService.guardarVenta(venta);
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("id", ventaGuardada.getVenta_id()); // 👈 Devolvemos solo el ID
-
-        return ResponseEntity.ok(response);
+        try {
+            Venta ventaGuardada = ventaService.guardarVenta(venta);
+            Map<String, Object> response = new HashMap<>();
+            response.put("id", ventaGuardada.getVenta_id());
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            logger.error("Error al guardar venta: {}", e.getMessage());
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", "Error al guardar la venta: " + e.getMessage());
+            return ResponseEntity.status(400).body(errorResponse);
+        }
     }
 
 
+      @PutMapping("/actualizarEstado/{id}")
+
+    public ResponseEntity<String> actualizarDatos(@PathVariable Long id, @RequestBody Venta venta){
+        ventaService.actualizarEstadoPago(id,venta);
+        return ResponseEntity.ok("Actualizado correctamente");
+
+    }
 
 
 }
