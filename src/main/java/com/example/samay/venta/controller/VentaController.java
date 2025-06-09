@@ -159,6 +159,7 @@ public class VentaController {
                     .externalReference(ventaGuardada.getVenta_id().toString())
                     .build();
 
+
             logger.debug("PreferenceRequest creado: items={}, externalReference={}", items.size(), ventaGuardada.getVenta_id());
             Preference preference = client.create(preferenceRequest);
             logger.info("Preferencia creada con ID: {}", preference.getId());
@@ -193,11 +194,14 @@ public class VentaController {
         }
     }
 
-    @PutMapping("/actualizarEstado/{id}")
+
+      @PutMapping("/actualizarEstado/{id}")
 
     public ResponseEntity<String> actualizarDatos(@PathVariable Long id, @RequestBody Venta venta){
         ventaService.actualizarEstadoPago(id,venta);
         return ResponseEntity.ok("Actualizado correctamente");
 
     }
+
+
 }
