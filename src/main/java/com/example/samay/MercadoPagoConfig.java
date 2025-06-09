@@ -1,3 +1,4 @@
+
 package com.example.samay;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -12,4 +13,6 @@ public class MercadoPagoConfig {
     public void init() {
         com.mercadopago.MercadoPagoConfig.setAccessToken("TEST-842565025555115-052521-61af028e01929d96e60ed748860348e4-726255972");
     }
+
+
 }
