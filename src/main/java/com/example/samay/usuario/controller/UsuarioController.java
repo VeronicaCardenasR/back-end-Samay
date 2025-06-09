@@ -47,12 +47,11 @@ public class UsuarioController {
     public ResponseEntity<String> login(@RequestBody Usuario user) {
         UserDetails userDetails = usuarioService.loadUserByUsername(user.getCorreo());
         if (userDetails != null && passwordEncoder.matches(user.getContrasena(), userDetails.getPassword())) {
-            // Extraemos el rol del usuario
             String role = userDetails.getAuthorities().stream()
                     .findFirst()
                     .map(GrantedAuthority::getAuthority)
                     .orElse("");
-            // Generamos token con rol
+
             Usuario usuarioEntity = usuarioService.obtenerPorCorreo(user.getCorreo());
             String token = jwtUtil.generateToken(usuarioEntity.getUsuario_id(), userDetails.getUsername(), role);
 

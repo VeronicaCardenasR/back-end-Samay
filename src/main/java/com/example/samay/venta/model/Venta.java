@@ -18,6 +18,11 @@ public class    Venta {
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal total;
+    @Column(nullable = false)
+    private String pagoAprobado; // Nuevo campo
+
+    @Column
+    private String detalleEnvio;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
@@ -26,11 +31,30 @@ public class    Venta {
     public Venta() {
     }
 
-    public Venta(Long venta_id, LocalDateTime fecha_venta, BigDecimal total, Usuario usuario) {
+    public Venta(Long venta_id, LocalDateTime fecha_venta, BigDecimal total, Usuario usuario, String pagoAprobado,String detalleEnvio) {
         this.venta_id = venta_id;
         this.fecha_venta = fecha_venta;
         this.total = total;
         this.usuario = usuario;
+        this.pagoAprobado = pagoAprobado;
+        this.detalleEnvio = detalleEnvio;
+    }
+
+
+    public String getPagoAprobado() {
+        return pagoAprobado;
+    }
+
+    public void setPagoAprobado(String pagoAprobado) {
+        this.pagoAprobado = pagoAprobado;
+    }
+
+    public String getDetalleEnvio() {
+        return detalleEnvio;
+    }
+
+    public void setDetalleEnvio(String detalleEnvio) {
+        this.detalleEnvio = detalleEnvio;
     }
 
     public Long getVenta_id() {
