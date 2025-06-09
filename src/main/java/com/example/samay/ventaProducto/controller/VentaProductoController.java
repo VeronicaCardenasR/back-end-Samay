@@ -152,13 +152,12 @@ public class VentaProductoController {
             PreferenceRequest preferenceRequest = PreferenceRequest.builder()
                     .items(items)
                     .backUrls(PreferenceBackUrlsRequest.builder()
-                            .success("www.google.com")
-                            .pending("www.google.com")
-                            .failure("www.google.com")
+                            .success("https://main.d3nlxcdq9iz53.amplifyapp.com/VistaComprador/home/index.html")
+                            .pending("https://main.d3nlxcdq9iz53.amplifyapp.com/VistaComprador/home/index.html")
+                            .failure("https://main.d3nlxcdq9iz53.amplifyapp.com/VistaComprador/home/index.html")
                             .build())
                     .autoReturn("approved")
                     .externalReference(dto.getVentaId().toString())
-                    .notificationUrl("https://754a-2800-486-1080-1700-c93-3f8-e5c0-8710.ngrok-free.app/venta-productos/webhooks")
                     .build();
 
             logger.debug("PreferenceRequest creado: items={}, externalReference={}", items.size(), dto.getVentaId());
