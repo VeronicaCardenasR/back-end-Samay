@@ -3,11 +3,27 @@ package com.example.samay.ventaProducto.controller;
 import com.example.samay.ventaProducto.model.VentaConProductosDTO;
 import com.example.samay.ventaProducto.service.VentaProductoService;
 import com.example.samay.ventaProducto.model.VentaProducto;
+import com.example.samay.venta.model.Venta;
+import com.example.samay.venta.service.VentaService;
+import com.mercadopago.MercadoPagoConfig;
+import com.mercadopago.client.payment.PaymentClient;
+import com.mercadopago.client.preference.PreferenceClient;
+import com.mercadopago.client.preference.PreferenceItemRequest;
+import com.mercadopago.client.preference.PreferenceRequest;
+import com.mercadopago.client.preference.PreferenceBackUrlsRequest;
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
+import com.mercadopago.resources.payment.Payment;
+import com.mercadopago.resources.preference.Preference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,11 +33,15 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class VentaProductoController {
 
+    private static final Logger logger = LoggerFactory.getLogger(VentaProductoController.class);
+
     private final VentaProductoService ventaProductoService;
+    private final VentaService ventaService;
 
     @Autowired
-    public VentaProductoController(VentaProductoService ventaProductoService) {
+    public VentaProductoController(VentaProductoService ventaProductoService, VentaService ventaService) {
         this.ventaProductoService = ventaProductoService;
+        this.ventaService = ventaService;
     }
 
     @GetMapping
@@ -42,14 +62,14 @@ public class VentaProductoController {
             response.put("message", "Producto agregado a la venta correctamente");
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
+            logger.error("Error al guardar venta-producto: {}", e.getMessage());
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 
-
- @PostMapping("/agregar-multiples")
+    @PostMapping("/agregar-multiples")
     public ResponseEntity<Map<String, String>> agregarProductosAVenta(@RequestBody VentaConProductosDTO dto) {
         try {
             logger.info("Recibiendo solicitud para agregar múltiples productos: ventaId={}", dto.getVentaId());
@@ -177,15 +197,4 @@ public class VentaProductoController {
     @GetMapping("/venta/{ventaId}")
     public List<VentaProducto> obtenerPorVenta(@PathVariable Long ventaId) {
         return ventaProductoService.obtenerPorVentaId(ventaId);
-
-
-
-
-
     }
-
-}
-
-
-
-
