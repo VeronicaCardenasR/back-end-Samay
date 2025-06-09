@@ -32,13 +32,29 @@ public class VentaService implements IventaService {
 
     @Override
     public Venta guardarVenta(Venta venta) {
+        // Validar y asignar el usuario
         Usuario usuario = usuarioRepository.findById(venta.getUsuario().getUsuario_id())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-
         venta.setUsuario(usuario);
 
-        Venta ventaGuardada = ventaRepository.save(venta); // 👈 este tiene el ID generado
+        // Inicializar pagoAprobado como "pendiente" si no está seteado
+
+            venta.setPagoAprobado("Aprobado");
+
+
+        // Guardar la venta
+        Venta ventaGuardada = ventaRepository.save(venta);
         return ventaGuardada;
+    }
+
+    @Override
+    public void actualizarEstadoPago(Long ventaId, Venta estado) {
+        Venta venta = ventaRepository.findById(ventaId).orElse(null);
+
+        venta.setDetalleEnvio(estado.getDetalleEnvio());
+
+        ventaRepository.save(venta);
+
     }
 
 }
